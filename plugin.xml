@@ -25,8 +25,10 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 </config-file>
 
 <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
 <meta-data android:name="my_api_id" android:value="$APP_ID" />
 <meta-data android:name="my_api_key" android:value="$APP_KEY" />
+
 <service
             android:name="mm.purchasesdk.iapservice.PurchaseService"
             android:exported="true" >
@@ -34,17 +36,17 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             <!-- android:process="mm.iapServices" > -->
             <intent-filter android:priority="240" >
                 <action android:name="com.aspire.purchaseservice.BIND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            
             <intent-filter android:priority="240" >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.SAFIAP.COMPONENT" >
                 </category>
             </intent-filter>
         </service>
         <!-- android:excludeFromRecents="true" -->
+        
         <!-- android:launchMode="singleInstance" -->
         <activity
             android:name="mm.purchasesdk.iapservice.BillingLayoutActivity"
@@ -52,7 +54,6 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:theme="@android:style/Theme.Translucent">
             <intent-filter android:priority="240" >
                 <action android:name="$APP_PACKAGE_ID.com.mmiap.activity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -94,22 +95,23 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:excludeFromRecents="true"
             android:configChanges="orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            
 <intent-filter android:priority="610" >
-                <action 
-android:name="safiap.framework.ACTION_TO_UPDATE" />
-            </intent-filter>
+	<action android:name="safiap.framework.ACTION_TO_UPDATE" />
+</intent-filter>
 <intent-filter android:priority="610" >
-                <action android:name="safiap.framework.ACTION_TO_INSTALL" />
-            </intent-filter>
-            <intent-filter android:priority="610" >
-                <action android:name="safiap.framework.ACTION_TO_INSTALL_IAP" />
-            </intent-filter>
-            <intent-filter android:priority="610" >
-                <action android:name="safiap.framework.ACTION_NETWORK_ERROR" />
-            </intent-filter>
-        </activity>
-        <service android:name="safiap.framework.logreport.monitor.handler.LogreportHandler" android:process=":remote"/>
-       	<!-- android:process="safiap.framework.safframeworkmanager" end -->
+	<action android:name="safiap.framework.ACTION_TO_INSTALL" />
+</intent-filter>
+<intent-filter android:priority="610" >
+	<action android:name="safiap.framework.ACTION_TO_INSTALL_IAP" />
+</intent-filter>
+<intent-filter android:priority="610" >
+	<action android:name="safiap.framework.ACTION_NETWORK_ERROR" />
+</intent-filter>
+</activity>
+
+<service android:name="safiap.framework.logreport.monitor.handler.LogreportHandler" android:process=":remote"/>
+<!-- android:process="safiap.framework.safframeworkmanager" end -->
 
 </config-file>
 
@@ -124,6 +126,9 @@ android:name="safiap.framework.ACTION_TO_UPDATE" />
 </config-file>
 
 <source-file src="src/android/MMBiling.java" target-dir="src/com/rjfun/cordova/plugin/MMBiling" />
+<source-file src="src/android/libs/mmbilling.2.4.0.jar" target-dir="libs" />
+<source-file src="src/android/libs/armeabi/libcasdkjni.so" target-dir="libs/armeabi" />
+<source-file src="src/android/libs/armeabi/libidentifyapp.so" target-dir="libs/armeabi" />
 
 </platform>
 
