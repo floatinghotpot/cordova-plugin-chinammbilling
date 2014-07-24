@@ -4,10 +4,12 @@ This plugin adds support to receive payment via China Mobile Billing in cordova 
 
 # How to Use #
 
-	cordova plugin add https://github.com/floatinghotpot/cordova-plugin-chinammbilling.git --variable APP_ID=<your appId> --variable APP_KEY=<your appkey> --variable APP_PACKAGE_ID=<your app package id>
+	cordova plugin add https://github.com/floatinghotpot/cordova-plugin-chinammbilling.git \
+	--variable APP_ID=<your appId> --variable APP_KEY=<your appkey> \
+	--variable APP_PACKAGE_ID=<your app package id>
 	
 Note: 
-- You need register and apply the appID and appKey from http://http://dev.10086.cn/.
+- You need register and apply the appID and appKey from http://dev.10086.cn/.
 - You need register a pay code for each payment point.
 	
 # Javascript APIs #
