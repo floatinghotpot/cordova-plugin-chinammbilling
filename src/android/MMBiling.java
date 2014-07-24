@@ -1,16 +1,27 @@
 package com.rjfun.cordova.plugin;
 
+import java.util.HashMap;
+
+import mm.purchasesdk.OnPurchaseListener;
+import mm.purchasesdk.Purchase;
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
+import android.util.Log;
+
 /**
  * This class echoes a string called from JavaScript.
  */
-public class MMBiling extends CordovaPlugin {
+public class MMBiling extends CordovaPlugin implements OnPurchaseListener {
+	private static final String TAG = "MMBillingPlugin";
 	
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -27,7 +38,7 @@ public class MMBiling extends CordovaPlugin {
             
         } else if(action.equals("order")) {
             String paycode = args.getString(0);
-            int count = args.getString(1);
+            int count = args.getInt(1);
             this.mmOrder(paycode, count, callbackContext);
             return true;
             
@@ -41,7 +52,7 @@ public class MMBiling extends CordovaPlugin {
             
         } else if(action.equals("unsubscribe")) {
             String paycode = args.getString(0);
-            this.unsubscribe(paycode, callbackContext);
+            this.mmUnsubscribe(paycode, callbackContext);
             return true;
             
         } else {
@@ -51,9 +62,10 @@ public class MMBiling extends CordovaPlugin {
     }
 
     private void mmInit(CallbackContext callbackContext) {
-    	String appId, appKey;
+    	String appId = null, appKey = null;
     	try {
-    	    ApplicationInfo ai = getPackageManager().getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
+    		PackageManager pm = cordova.getActivity().getPackageManager();
+    	    ApplicationInfo ai = pm.getApplicationInfo(cordova.getActivity().getPackageName(), PackageManager.GET_META_DATA);
     	    Bundle bundle = ai.metaData;
     	    appId = bundle.getString("my_api_id");
     	    appKey = bundle.getString("my_api_key");
@@ -63,9 +75,9 @@ public class MMBiling extends CordovaPlugin {
     	    Log.e(TAG, "Failed to load meta-data, NullPointer: " + e.getMessage());         
     	}
     	
-    	// setAppInfo( appId, appKey );
-    	
-    	// init(context, new listener());
+    	Purchase pur = Purchase.getInstance();
+    	pur.setAppInfo( appId, appKey );
+    	pur.init(cordova.getActivity(), this);
     	
     	if( true ) {
             callbackContext.success("ok");
@@ -108,6 +120,54 @@ public class MMBiling extends CordovaPlugin {
         } else {
             callbackContext.error("error msg.");
         }
-    }    
+    }
+
+	@Override
+	public void onAfterApply() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAfterDownload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBeforeApply() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBeforeDownload() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onBillingFinish(int arg0, HashMap arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onInitFinish(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onQueryFinish(int arg0, HashMap arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onUnsubscribeFinish(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}    
     
 }
