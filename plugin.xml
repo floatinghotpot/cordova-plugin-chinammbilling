@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.rjfun.cordova.plugin.mmbilling" 
+<plugin id="com.rjfun.cordova.plugin.chinamm-iap" 
 version="0.0.1" 
 xmlns="http://apache.org/cordova/ns/plugins/1.0" 
 xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<name>MMBiling</name>
-	<description>Add support to receive payment via China Mobile Billing in cordova apps or games to earn revenue</description>
+	<name>ChinaMobile IAP</name>
+	<description>Add ChinaMobile In-App Payment to cordova apps or games</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
 	<keywords>IAP,billing,pay,payment,China,Mobile</keywords>
@@ -17,13 +17,16 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 </js-module>
 
 <platform name="android">
+
+<dependency id="cn.10086.iapsdk" version=">=2.4.0"/>
 <preference name="APP_ID"/>
 <preference name="APP_KEY"/>
 <preference name="APP_PACKAGE_ID"/>
+
 <config-file parent="/*" target="res/xml/config.xml">
-<feature name="MMBiling">
-<param name="android-package" value="com.rjfun.cordova.plugin.MMBiling" />
-</feature>
+	<feature name="MMBiling">
+	<param name="android-package" value="com.rjfun.cordova.plugin.MMBiling" />
+	</feature>
 </config-file>
 
 <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -31,24 +34,6 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 <meta-data android:name="my_api_id" android:value="$APP_ID" />
 <meta-data android:name="my_api_key" android:value="$APP_KEY" />
 
-<service
-            android:name="mm.purchasesdk.iapservice.PurchaseService"
-            android:exported="true" >
-
-            <!-- android:process="mm.iapServices" > -->
-            <intent-filter android:priority="240" >
-                <action android:name="com.aspire.purchaseservice.BIND" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            
-            <intent-filter android:priority="240" >
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.SAFIAP.COMPONENT" >
-                </category>
-            </intent-filter>
-        </service>
-        <!-- android:excludeFromRecents="true" -->
-        
         <!-- android:launchMode="singleInstance" -->
         <activity
             android:name="mm.purchasesdk.iapservice.BillingLayoutActivity"
@@ -60,77 +45,9 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             </intent-filter>
         </activity>
 
-      <!-- android:process="safiap.framework.safframeworkmanager" begin -->
-        <service
-            android:name="safiap.framework.SafFrameworkManager"
-            android:exported="true"
-            android:process="safiap.framework" >
-            <intent-filter android:priority="610" >
-
-            <!-- ID for services declared in AIDL -->
-        		<action android:name="safiap.framework.sdk.ISAFFramework" />
-            </intent-filter>
-            <intent-filter android:priority="610" >
-                <!-- ID for services declared in AIDL -->
-                <action android:name="safiap.framework.ACTION_START_DOWNLOAD" />
-        	</intent-filter>
-        	<intent-filter android:priority="610" >
-                <!-- ID for services declared in AIDL -->
-                <action android:name="safiap.framework.ACTION_CHECK_UPDATE" />
-            </intent-filter>
-        </service>
-        <!-- receivers -->
-        <receiver android:name="safiap.framework.CheckUpdateReceiver" >
-            <intent-filter>
-                <action android:name="safiap.framework.ACTION_CANCEL_NOTIFICATION" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="safiap.GET_SHARED_DATA" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="safiap.framework.ACTION_SET_TIMER" />
-            </intent-filter>
-        </receiver>
-        <activity
-            android:name="safiap.framework.ui.UpdateHintActivity" 
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
-            android:configChanges="orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            
-<intent-filter android:priority="610" >
-	<action android:name="safiap.framework.ACTION_TO_UPDATE" />
-</intent-filter>
-<intent-filter android:priority="610" >
-	<action android:name="safiap.framework.ACTION_TO_INSTALL" />
-</intent-filter>
-<intent-filter android:priority="610" >
-	<action android:name="safiap.framework.ACTION_TO_INSTALL_IAP" />
-</intent-filter>
-<intent-filter android:priority="610" >
-	<action android:name="safiap.framework.ACTION_NETWORK_ERROR" />
-</intent-filter>
-</activity>
-
-<service android:name="safiap.framework.logreport.monitor.handler.LogreportHandler" android:process=":remote"/>
-<!-- android:process="safiap.framework.safframeworkmanager" end -->
-
-</config-file>
-
-<config-file parent="/*" target="AndroidManifest.xml">
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 </config-file>
 
 <source-file src="src/android/MMBiling.java" target-dir="src/com/rjfun/cordova/plugin" />
-<source-file src="src/android/libs/mmbilling.2.4.0.jar" target-dir="libs" />
-<source-file src="src/android/libs/armeabi/libcasdkjni.so" target-dir="libs/armeabi" />
-<source-file src="src/android/libs/armeabi/libidentifyapp.so" target-dir="libs/armeabi" />
 
 </platform>
 
